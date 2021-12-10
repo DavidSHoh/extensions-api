@@ -83,8 +83,38 @@
                 };
             });
 
+            
+            
+
+
+            var yourEmbeddedDataSpec = {
+                description: 'A simple chart with embedded data.',
+                data: {
+                    getUnderlyingData();
+                },
+                mark: tableau.MarkType.Bar,
+                encoding: {
+                    columns: { field: 'Model', type: tableau.VizImageEncodingType.Discrete },
+                    rows: { field: 'ANZ(Asset Items)', type: tableau.VizImageEncodingType.Continuous, hidden: true},
+                }
+            };
+
+            tableau.extensions.createVizImageAsync(yourEmbeddedDataSpec).then((svg) => {
+                console.log(svg);
+                var blob = new Blob([svg], { type: 'image/svg+xml' });
+                var url = URL.createObjectURL(blob);
+                var image = document.createElement('img');
+                image.src = url;
+                image.style.maxWidth = '100%';
+                var vizApiElement = document.getElementById('vizContainer');
+                vizApiElement.appendChild(image);
+                image.addEventListener('load', function () { return URL.revokeObjectURL(url); }, { once: true });
+            }, (err) => {
+                console.log(err);
+            });
+
             // Populate the data table with the rows and columns we just pulled out
-            populateDataTable(data, columns);
+            //populateDataTable(data, columns);
         });
 
 
@@ -98,6 +128,30 @@
 
     function initializeButtons() {
         $('#show_choose_sheet_button').click(showModal);
+    }
+
+    function populateGraph(){
+        
+    }
+
+    function getUnderlyingData(){
+        sheet = viz.getWorkbook().getActiveSheet().getWorksheets().get("Blatt 2");
+
+        options = {
+            maxRows: 10, // Max rows to return. Use 0 to return all rows
+            ignoreAliases: false,
+            ignoreSelection: true,
+            includeAllColumns: false
+        };
+
+
+
+        sheet.getUnderlyingDataAsync(options).then(function(t){
+            table = t;
+            var tgt = document.getElementById("vizContainer");
+			tgt.innerHTML = "<h4>Underlying Data:</h4><p>" + JSON.stringify(table.getData()) + "</p>";
+
+        })
     }
 
     function populateDataTable(data, columns){
