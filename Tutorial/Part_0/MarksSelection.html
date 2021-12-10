@@ -14,13 +14,49 @@
 
     <title>Tutorial - Part 0</title>
 
+    <!-- Include the Tableau Extensions library so we can communicate with Tableau -->
+    <script src="/lib/tableau.extensions.1.latest.js"></script>
+
     <!-- Include our own style sheets and javascript code -->
     <link rel="stylesheet" href="./MarksSelection.css">
     <script src="./MarksSelection.js"></script>
 </head>
 
 <body>
-    Hello Extensions!
+<!--
+  <div class="container-fluid">
+
+      <div id="selected_marks">
+          <h4>
+              Marks for <span class="sheet_name" id="selected_marks_title">Sheet Name</span>
+              <button title="Choose Sheet" type="button" class="btn btn-link" id="show_choose_sheet_button">
+        <i class="material-icons">build</i>
+      </button>
+          </h4>
+          <div id="data_table_wrapper"></div>
+          <div id="no_data_message">
+              <h5>No marks selected</h5>
+          </div>
+      </div>
+  </div>
+-->
+
+  <div id="vizContainer" style="width:800px; height:700px;"></div>
+
+
+  <div class="modal fade" id="modaltest" tabindex="-1" role="dialog" data-toggle="modal">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Modal title</h5>
+      </div>
+      <div class="modal-body" id="modal_body">
+        <div id="choose_sheet_buttons"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
 </body>
 
 </html>
